@@ -1,46 +1,75 @@
-
-dragula([
-  document.getElementById("to-do"),
-  document.getElementById("doing"),
-  document.getElementById("done"),
-  document.getElementById("trash")
-]);
-
-
-function addTask() {
-  var inputTask = document.getElementById("taskText").value;
-  if (inputTask.trim() !== "") {
-    var newTask = document.createElement("li");
-    newTask.className = "task";
-    newTask.innerHTML = "<p>" + inputTask + "</p>";
-
-    document.getElementById("to-do").appendChild(newTask);
-    document.getElementById("taskText").value = "";
-  }
-}
-
-
-document.getElementById("add").addEventListener("click", addTask);
-
-
-document.getElementById("taskText").addEventListener("keydown", function(event) {
-  if (event.keyCode === 13) {
-    addTask();
-  }
-});
-
-
-document.getElementById("trash").addEventListener('click', function(event) {
-  if (event.target.tagName === 'P') {
-    var task = event.target.parentNode;
-    task.parentNode.removeChild(task);
-  }
-});
-
-
-function emptyTrash() {
-  document.getElementById("trash").innerHTML = "";
-}
-
-
-document.querySelector(".delete-button").addEventListener("click", emptyTrash);
+$(document).ready(function () {
+    $(window).scroll(function () {
+      //  sticky navbar on scroll script  //
+      if (this.scrollY > 20) {
+        $(".navbar").addClass("sticky");
+      } else {
+        $(".navbar").removeClass("sticky");
+      }
+  
+      //  scroll-up button show/hide script  //
+      if (this.scrollY > 500) {
+        $(".scroll-up-btn").addClass("show");
+      } else {
+        $(".scroll-up-btn").removeClass("show");
+      }
+    });
+  
+    //  slide-up script  //
+  
+    $(".scroll-up-btn").click(function () {
+      $("html").animate({ scrollTop: 0 });
+      //  removing smooth scroll on slide-up button click  //
+      $("html").css("scrollBehavior", "auto");
+    });
+  
+    $(".navbar .menu li a").click(function () {
+      //  Smooth scroll on Menu Items click  //
+  
+      $("html").css("scrollBehavior", "smooth");
+    });
+  
+    //  Toggle Navbar  //
+  
+    $(".menu-btn").click(function () {
+      $(".navbar .menu").toggleClass("active");
+      $(".menu-btn i").toggleClass("active");
+    });
+  
+    //  Typing Text Animation  //
+  
+    var typed = new Typed(".typing", {
+      strings: [
+        "Web Developer",
+        "Web Designer",
+      ],
+      typeSpeed: 100,
+      backSpeed: 60,
+      loop: true
+    });
+  
+  
+    
+  
+    $(".carousel").owlCarousel({
+      margin: 20,
+      loop: true,
+      autoplay: true,
+      autoplayTimeOut: 2000,
+      autoplayHoverPause: true,
+      responsive: {
+        0: {
+          items: 1,
+          nav: false
+        },
+        600: {
+          items: 2,
+          nav: false
+        },
+        1000: {
+          items: 3,
+          nav: false
+        }
+      }
+    });
+  });
